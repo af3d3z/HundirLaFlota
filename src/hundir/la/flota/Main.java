@@ -27,6 +27,7 @@ public class Main {
 		// creamos el objeto flota
 		Flota flota = new Flota();
 		
+		// preguntamos al usuario el numero de rondas a jugar
 		try {
 			System.out.println("/***HUNDIR LA FLOTA***\\");
 			System.out.println("Introduzca el numero de rondas que quiere jugar: ");
@@ -35,22 +36,26 @@ public class Main {
 			System.err.println("Dato incorrecto.");
 		}
 		
-		for(int i = 1; i <= nRondas; i++) {
-			while(resMisil != 0) {
-				flota.pintaTablero();
-				System.out.println("Introduce un cuadrante: (LetraNumero Ej: A1)");
-				misil = sc.next();
-				xMisil = misil.toUpperCase().charAt(0) - 64;
-				yMisil = Integer.parseInt(misil.substring(1));
-				
-				resMisil = flota.lanzarMisil(xMisil, yMisil);
+		if(nRondas < 0) {
+			// cada ronda dura lo que se tarde en hundir el barco
+			for(int i = 1; i <= nRondas; i++) {
+				while(resMisil != 0) {
+					flota.pintaTablero();
+					System.out.println("Introduce un cuadrante: (LetraNumero Ej: A1)");
+					misil = sc.next();
+					xMisil = misil.toUpperCase().charAt(0) - 64;
+					yMisil = Integer.parseInt(misil.substring(1));
+					
+					resMisil = flota.lanzarMisil(xMisil, yMisil);
+				}
+				Flota.generaCoordenadas();
+				System.out.printf("Barco derribado en coordenadas %s\n", misil.toUpperCase());
+				resMisil = 1;
 			}
-			Flota.generaCoordenadas();
-			System.out.printf("Barco derribado en coordenadas %s\n", misil.toUpperCase());
-			resMisil = 1;
+			
+			System.out.println("Enhorabuena, has ganado el juego. Eres un exelente bombardero :3");
 		}
 		
-		System.out.println("Enhorabuena, has ganado el juego. :3");
 		sc.close();
 	}
 }
